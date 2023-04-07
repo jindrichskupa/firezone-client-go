@@ -7,9 +7,6 @@ import (
 	"time"
 )
 
-// HostURL - Default Firezone URL
-const HostURL string = "http://localhost:19090"
-
 // Client -
 type Client struct {
 	HostURL    string
@@ -22,7 +19,7 @@ func NewClient(host, apiKey string) (*Client, error) {
 	c := Client{
 		HTTPClient: &http.Client{Timeout: 10 * time.Second},
 		// Default Firezone URL
-		HostURL: HostURL,
+		HostURL: host,
 	}
 
 	if host != "" {
