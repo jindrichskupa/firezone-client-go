@@ -1,7 +1,5 @@
 package firezone
 
-import "time"
-
 type ApiUser struct {
 	data User
 }
