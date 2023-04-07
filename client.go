@@ -25,16 +25,14 @@ func NewClient(host, apiKey string) (*Client, error) {
 		HostURL: HostURL,
 	}
 
-	if host != nil {
-		c.HostURL = *host
+	if host != "" {
+		c.HostURL = host
 	}
 
 	// If apiKey not provided, return empty client
-	if apiKey == nil {
-		return &c, nil
+	if apiKey != "" {
+		c.ApiKey = apiKey
 	}
-
-	c.ApiKey = *apiKey
 
 	return &c, nil
 }
