@@ -1,11 +1,11 @@
-package firezone
+package client
 
 type ApiUser struct {
-	data User
+	Data User `json:"data"`
 }
 
 type ApiUsers struct {
-	data []User
+	Data []User `json:"data"`
 }
 
 // User -
@@ -22,12 +22,12 @@ type User struct {
 
 // ApiRule -
 type ApiRule struct {
-	data Rule
+	Data Rule `json:"data"`
 }
 
 // ApiRules -
 type ApiRules struct {
-	data []Rule
+	Data []Rule `json:"data"`
 }
 
 // Rule -
@@ -44,12 +44,12 @@ type Rule struct {
 
 // ApiDevice -
 type ApiDevice struct {
-	data Device
+	Data Device `json:"data"`
 }
 
 // ApiDevices -
 type ApiDevices struct {
-	data []Device
+	Data []Device `json:"data"`
 }
 
 // Device -
@@ -83,7 +83,7 @@ type Device struct {
 
 // ApiConfiguration -
 type ApiConfiguration struct {
-	data Configuration
+	Data Configuration `json:"data"`
 }
 
 // Configuration -

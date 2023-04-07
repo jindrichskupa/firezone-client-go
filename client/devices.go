@@ -1,4 +1,4 @@
-package firezone
+package client
 
 import (
 	"encoding/json"
@@ -26,7 +26,7 @@ func (c *Client) GetAllDevices() (*[]Device, error) {
 		return nil, err
 	}
 
-	return &apiDevices.data, nil
+	return &apiDevices.Data, nil
 }
 
 // GetDevice - Returns a specifc Device
@@ -47,7 +47,7 @@ func (c *Client) GetDevice(deviceId string) (*Device, error) {
 		return nil, err
 	}
 
-	return &apiDevice.data, nil
+	return &apiDevice.Data, nil
 }
 
 // CreateDevice - Create new Device
@@ -73,7 +73,7 @@ func (c *Client) CreateDevice(device Device) (*Device, error) {
 		return nil, err
 	}
 
-	return &apiDevice.data, nil
+	return &apiDevice.Data, nil
 }
 
 // UpdateDevice - Updates an Device
@@ -99,7 +99,7 @@ func (c *Client) UpdateDevice(deviceId string, device Device) (*Device, error) {
 		return nil, err
 	}
 
-	return &apiDevice.data, nil
+	return &apiDevice.Data, nil
 }
 
 // DeleteDevice - Deletes an Device

@@ -1,4 +1,4 @@
-package firezone
+package client
 
 import (
 	"encoding/json"
@@ -26,7 +26,7 @@ func (c *Client) GetAllRules() (*[]Rule, error) {
 		return nil, err
 	}
 
-	return &apiRules.data, nil
+	return &apiRules.Data, nil
 }
 
 // GetRule - Returns a specifc Rule
@@ -47,7 +47,7 @@ func (c *Client) GetRule(ruleId string) (*Rule, error) {
 		return nil, err
 	}
 
-	return &apiRule.data, nil
+	return &apiRule.Data, nil
 }
 
 // CreateRule - Create new Rule
@@ -73,7 +73,7 @@ func (c *Client) CreateRule(rule Rule) (*Rule, error) {
 		return nil, err
 	}
 
-	return &apiRule.data, nil
+	return &apiRule.Data, nil
 }
 
 // UpdateRule - Updates an Rule
@@ -99,7 +99,7 @@ func (c *Client) UpdateRule(ruleId string, rule Rule) (*Rule, error) {
 		return nil, err
 	}
 
-	return &apiRule.data, nil
+	return &apiRule.Data, nil
 }
 
 // DeleteRule - Deletes an Rule

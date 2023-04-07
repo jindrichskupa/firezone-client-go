@@ -1,4 +1,4 @@
-package firezone
+package client
 
 import (
 	"encoding/json"
@@ -25,12 +25,12 @@ func (c *Client) GetConfiguration() (*Configuration, error) {
 		return nil, err
 	}
 
-	return &apiConfiguration.data, nil
+	return &apiConfiguration.Data, nil
 }
 
 // UpdateConfiguration  -
 func (c *Client) UpdateConfiguration(configuration Configuration) (*Configuration, error) {
-	rb, err := json.Marshal(ApiConfiguration{data: configuration})
+	rb, err := json.Marshal(configuration)
 	if err != nil {
 		return nil, err
 	}
@@ -51,5 +51,5 @@ func (c *Client) UpdateConfiguration(configuration Configuration) (*Configuratio
 		return nil, err
 	}
 
-	return &apiConfiguration.data, nil
+	return &apiConfiguration.Data, nil
 }

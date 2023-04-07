@@ -1,4 +1,4 @@
-package firezone
+package client
 
 import (
 	"encoding/json"
@@ -21,12 +21,15 @@ func (c *Client) GetAllUsers() (*[]User, error) {
 	}
 
 	apiUsers := ApiUsers{}
+	fmt.Println(apiUsers)
+	fmt.Println(string(body))
 	err = json.Unmarshal(body, &apiUsers)
+	fmt.Println(apiUsers)
 	if err != nil {
 		return nil, err
 	}
 
-	return &apiUsers.data, nil
+	return &apiUsers.Data, nil
 }
 
 // GetUser - Returns a specifc User
@@ -47,7 +50,7 @@ func (c *Client) GetUser(userId string) (*User, error) {
 		return nil, err
 	}
 
-	return &apiUser.data, nil
+	return &apiUser.Data, nil
 }
 
 // CreateUser - Create new User
@@ -73,7 +76,7 @@ func (c *Client) CreateUser(user User) (*User, error) {
 		return nil, err
 	}
 
-	return &apiUser.data, nil
+	return &apiUser.Data, nil
 }
 
 // UpdateUser - Updates an User
@@ -99,7 +102,7 @@ func (c *Client) UpdateUser(userId string, user User) (*User, error) {
 		return nil, err
 	}
 
-	return &apiUser.data, nil
+	return &apiUser.Data, nil
 }
 
 // DeleteUser - Deletes an User

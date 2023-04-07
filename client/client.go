@@ -1,4 +1,4 @@
-package firezone
+package client
 
 import (
 	"fmt"
