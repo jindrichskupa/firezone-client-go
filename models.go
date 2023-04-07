@@ -12,14 +12,14 @@ type ApiUsers struct {
 
 // User -
 type User struct {
-	ID                 string    `json:"id"`
-	Email              string    `json:"email,omitempty"`
-	Role               string    `json:"role,omitempty"`
-	LastSignedInAt     time.Time `json:"last_signed_in_at,omitempty"`
-	LastSignedInMethod string    `json:"last_signed_in_method,omitempty"`
-	UpdatedAt          time.Time `json:"updated_at,omitempty"`
-	InsertedAt         time.Time `json:"inserted_at,omitempty"`
-	DisabledAt         time.Time `json:"disabled_at,omitempty"`
+	ID                 string `json:"id"`
+	Email              string `json:"email,omitempty"`
+	Role               string `json:"role,omitempty"`
+	LastSignedInAt     string `json:"last_signed_in_at,omitempty"`
+	LastSignedInMethod string `json:"last_signed_in_method,omitempty"`
+	UpdatedAt          string `json:"updated_at,omitempty"`
+	InsertedAt         string `json:"inserted_at,omitempty"`
+	DisabledAt         string `json:"disabled_at,omitempty"`
 }
 
 // ApiRule -
@@ -34,14 +34,14 @@ type ApiRules struct {
 
 // Rule -
 type Rule struct {
-	ID          string    `json:"id"`
-	UserId      string    `json:"user_id,omitempty"`
-	Action      string    `json:"action,omitempty"`
-	Destination string    `json:"destination,omitempty"`
-	PortRange   string    `json:"port_range,omitempty"`
-	PortType    string    `json:"port_type,omitempty"`
-	UpdatedAt   time.Time `json:"updated_at,omitempty"`
-	InsertedAt  time.Time `json:"inserted_at,omitempty"`
+	ID          string `json:"id"`
+	UserId      string `json:"user_id,omitempty"`
+	Action      string `json:"action,omitempty"`
+	Destination string `json:"destination,omitempty"`
+	PortRange   string `json:"port_range,omitempty"`
+	PortType    string `json:"port_type,omitempty"`
+	UpdatedAt   string `json:"updated_at,omitempty"`
+	InsertedAt  string `json:"inserted_at,omitempty"`
 }
 
 // ApiDevice -
@@ -61,7 +61,7 @@ type Device struct {
 	Description                   string      `json:"description"`
 	DNS                           []string    `json:"dns"`
 	Endpoint                      string      `json:"endpoint"`
-	InsertedAt                    time.Time   `json:"inserted_at"`
+	InsertedAt                    string      `json:"inserted_at"`
 	IPv4                          string      `json:"ipv4"`
 	IPv6                          string      `json:"ipv6"`
 	LatestHandshake               interface{} `json:"latest_handshake"`
@@ -74,7 +74,7 @@ type Device struct {
 	RXBytes                       interface{} `json:"rx_bytes"`
 	ServerPublicKey               string      `json:"server_public_key"`
 	TXBytes                       interface{} `json:"tx_bytes"`
-	UpdatedAt                     time.Time   `json:"updated_at,omitempty"`
+	UpdatedAt                     string      `json:"updated_at,omitempty"`
 	UseDefaultAllowedIPs          bool        `json:"use_default_allowed_ips"`
 	UseDefaultDNS                 bool        `json:"use_default_dns"`
 	UseDefaultEndpoint            bool        `json:"use_default_endpoint"`
@@ -90,18 +90,18 @@ type ApiConfiguration struct {
 
 // Configuration -
 type Configuration struct {
-	ID                                   string    `json:"id"`
-	AllowUnprivilegedDeviceConfiguration bool      `json:"allow_unprivileged_device_configuration"`
-	AllowUnprivilegedDeviceManagement    bool      `json:"allow_unprivileged_device_management"`
-	DefaultClientAllowedIPs              []string  `json:"default_client_allowed_ips"`
-	DefaultClientDNS                     []string  `json:"default_client_dns"`
-	DefaultClientEndpoint                string    `json:"default_client_endpoint"`
-	DefaultClientMTU                     int       `json:"default_client_mtu"`
-	DefaultClientPersistentKeepalive     int       `json:"default_client_persistent_keepalive"`
-	DisableVPNOnOIDCError                bool      `json:"disable_vpn_on_oidc_error"`
-	InsertedAt                           time.Time `json:"inserted_at"`
-	LocalAuthEnabled                     bool      `json:"local_auth_enabled"`
-	Logo                                 struct{}  `json:"logo"`
+	ID                                   string   `json:"id"`
+	AllowUnprivilegedDeviceConfiguration bool     `json:"allow_unprivileged_device_configuration"`
+	AllowUnprivilegedDeviceManagement    bool     `json:"allow_unprivileged_device_management"`
+	DefaultClientAllowedIPs              []string `json:"default_client_allowed_ips"`
+	DefaultClientDNS                     []string `json:"default_client_dns"`
+	DefaultClientEndpoint                string   `json:"default_client_endpoint"`
+	DefaultClientMTU                     int      `json:"default_client_mtu"`
+	DefaultClientPersistentKeepalive     int      `json:"default_client_persistent_keepalive"`
+	DisableVPNOnOIDCError                bool     `json:"disable_vpn_on_oidc_error"`
+	InsertedAt                           string   `json:"inserted_at"`
+	LocalAuthEnabled                     bool     `json:"local_auth_enabled"`
+	Logo                                 struct{} `json:"logo"`
 	OpenIDConnectProviders               []struct {
 		AutoCreateUsers      bool   `json:"auto_create_users"`
 		ClientID             string `json:"client_id"`
@@ -120,6 +120,6 @@ type Configuration struct {
 		Label           string `json:"label"`
 		Metadata        string `json:"metadata"`
 	} `json:"saml_identity_providers"`
-	UpdatedAt          time.Time `json:"updated_at,omitempty"`
-	VpnSessionDuration int       `json:"vpn_session_duration"`
+	UpdatedAt          string `json:"updated_at,omitempty"`
+	VpnSessionDuration int    `json:"vpn_session_duration"`
 }
