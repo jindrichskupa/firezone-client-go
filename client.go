@@ -18,7 +18,7 @@ type Client struct {
 }
 
 // NewClient -
-func NewClient(host, apiKey *string) (*Client, error) {
+func NewClient(host, apiKey string) (*Client, error) {
 	c := Client{
 		HTTPClient: &http.Client{Timeout: 10 * time.Second},
 		// Default Firezone URL
