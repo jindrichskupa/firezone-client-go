@@ -1,5 +1,7 @@
 package client
 
+import "fmt"
+
 type ApiUser struct {
 	Data User `json:"data"`
 }
@@ -18,6 +20,27 @@ type User struct {
 	UpdatedAt          string `json:"updated_at,omitempty"`
 	InsertedAt         string `json:"inserted_at,omitempty"`
 	DisabledAt         string `json:"disabled_at,omitempty"`
+}
+
+type CreateUser struct {
+	User struct {
+		Email string `json:"email"`
+		Role  string `json:"role"`
+	} `json:"user"`
+}
+
+// PrintUser -	Prints user in a human readable format
+func (u *User) PrintUser() string {
+	return fmt.Sprintf("User: %s	Role: %s	Email: %s", u.ID, u.Role, u.Email)
+}
+
+// PrintUsers -	Prints users in a human readable format
+func PrintUsers(u *[]User) string {
+	var users string
+	for _, user := range *u {
+		users += user.PrintUser() + "\n"
+	}
+	return users
 }
 
 // ApiRule -
@@ -40,6 +63,30 @@ type Rule struct {
 	PortType    string `json:"port_type,omitempty"`
 	UpdatedAt   string `json:"updated_at,omitempty"`
 	InsertedAt  string `json:"inserted_at,omitempty"`
+}
+
+type CreateRule struct {
+	Rule struct {
+		Action      string `json:"action"`
+		Destination string `json:"destination"`
+		PortRange   string `json:"port_range"`
+		PortType    string `json:"port_type"`
+		UserId      string `json:"user_id,omitempty"`
+	} `json:"rule"`
+}
+
+// PrintRule -	Prints rule in a human readable format
+func (r *Rule) PrintRule() string {
+	return fmt.Sprintf("Rule: %s	%s	%s	%s", r.Action, r.Destination, r.PortRange, r.PortType)
+}
+
+// PrintRules -	Prints rules in a human readable format
+func PrintRules(r *[]Rule) string {
+	var rules string
+	for _, rule := range *r {
+		rules += rule.PrintRule() + "\n"
+	}
+	return rules
 }
 
 // ApiDevice -
@@ -78,7 +125,43 @@ type Device struct {
 	UseDefaultEndpoint            bool        `json:"use_default_endpoint"`
 	UseDefaultMTU                 bool        `json:"use_default_mtu"`
 	UseDefaultPersistentKeepalive bool        `json:"use_default_persistent_keepalive"`
-	UserID                        string      `json:"user_id"`
+	UserId                        string      `json:"user_id"`
+}
+
+type CreateDevice struct {
+	Device struct {
+		AllowedIPs             []string `json:"allowed_ips"`
+		Description            string   `json:"description"`
+		DNS                    []string `json:"dns"`
+		Endpoint               string   `json:"endpoint"`
+		IPv4                   string   `json:"ipv4"`
+		IPv6                   string   `json:"ipv6"`
+		MTU                    int      `json:"mtu"`
+		Name                   string   `json:"name"`
+		PersistentKeepalive    int      `json:"persistent_keepalive"`
+		PresharedKey           string   `json:"preshared_key"`
+		PublicKey              string   `json:"public_key"`
+		UseDefaultAllowedIPs   bool     `json:"use_default_allowed_ips"`
+		UseDefaultDNS          bool     `json:"use_default_dns"`
+		UseDefaultEndpoint     bool     `json:"use_default_endpoint"`
+		UseDefaultMTU          bool     `json:"use_default_mtu"`
+		UseDefaultPersistentKA bool     `json:"use_default_persistent_keepalive"`
+		UserId                 string   `json:"user_id"`
+	} `json:"device"`
+}
+
+// PrintDevice -	Prints device in a human readable format
+func (d *Device) PrintDevice() string {
+	return fmt.Sprintf("Device: %s	IPv4: %s	IPv6: %s	Endpoint: %s	Allowed IPs: %s", d.Name, d.IPv4, d.IPv6, d.Endpoint, d.AllowedIPs)
+}
+
+// PrintDevices -	Prints devices in a human readable format
+func PrintDevices(d *[]Device) string {
+	var devices string
+	for _, device := range *d {
+		devices += device.PrintDevice() + "\n"
+	}
+	return devices
 }
 
 // ApiConfiguration -
@@ -120,4 +203,10 @@ type Configuration struct {
 	} `json:"saml_identity_providers"`
 	UpdatedAt          string `json:"updated_at,omitempty"`
 	VpnSessionDuration int    `json:"vpn_session_duration"`
+}
+
+// PrintConfiguration -	Prints configuration in a human readable format
+
+func (c *Configuration) PrintConfiguration() string {
+	return fmt.Sprintf("Configuration: %s	VPN Session Duration: %d", c.ID, c.VpnSessionDuration)
 }

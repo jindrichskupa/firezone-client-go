@@ -21,10 +21,7 @@ func (c *Client) GetAllUsers() (*[]User, error) {
 	}
 
 	apiUsers := ApiUsers{}
-	fmt.Println(apiUsers)
-	fmt.Println(string(body))
 	err = json.Unmarshal(body, &apiUsers)
-	fmt.Println(apiUsers)
 	if err != nil {
 		return nil, err
 	}
@@ -55,7 +52,14 @@ func (c *Client) GetUser(userId string) (*User, error) {
 
 // CreateUser - Create new User
 func (c *Client) CreateUser(user User) (*User, error) {
-	rb, err := json.Marshal(user)
+	rb, err := json.Marshal(CreateUser{User: struct {
+		Email string `json:"email"`
+		Role  string `json:"role"`
+	}{
+		Email: user.Email,
+		Role:  user.Role,
+	}})
+
 	if err != nil {
 		return nil, err
 	}
@@ -75,13 +79,18 @@ func (c *Client) CreateUser(user User) (*User, error) {
 	if err != nil {
 		return nil, err
 	}
-
 	return &apiUser.Data, nil
 }
 
 // UpdateUser - Updates an User
 func (c *Client) UpdateUser(userId string, user User) (*User, error) {
-	rb, err := json.Marshal(user)
+	rb, err := json.Marshal(CreateUser{User: struct {
+		Email string `json:"email"`
+		Role  string `json:"role"`
+	}{
+		Email: user.Email,
+		Role:  user.Role,
+	}})
 	if err != nil {
 		return nil, err
 	}

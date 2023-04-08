@@ -10,7 +10,7 @@ import (
 
 // GetAllDevices - Returns all user's Device
 func (c *Client) GetAllDevices() (*[]Device, error) {
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/v0/users", c.HostURL), nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/v0/devices", c.HostURL), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -31,7 +31,7 @@ func (c *Client) GetAllDevices() (*[]Device, error) {
 
 // GetDevice - Returns a specifc Device
 func (c *Client) GetDevice(deviceId string) (*Device, error) {
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/v0/users/%s", c.HostURL, deviceId), nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/v0/devices/%s", c.HostURL, deviceId), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -52,12 +52,42 @@ func (c *Client) GetDevice(deviceId string) (*Device, error) {
 
 // CreateDevice - Create new Device
 func (c *Client) CreateDevice(device Device) (*Device, error) {
-	rb, err := json.Marshal(device)
+	rb, err := json.Marshal(CreateDevice{Device: struct {
+		AllowedIPs             []string `json:"allowed_ips"`
+		Description            string   `json:"description"`
+		DNS                    []string `json:"dns"`
+		Endpoint               string   `json:"endpoint"`
+		IPv4                   string   `json:"ipv4"`
+		IPv6                   string   `json:"ipv6"`
+		MTU                    int      `json:"mtu"`
+		Name                   string   `json:"name"`
+		PersistentKeepalive    int      `json:"persistent_keepalive"`
+		PresharedKey           string   `json:"preshared_key"`
+		PublicKey              string   `json:"public_key"`
+		UseDefaultAllowedIPs   bool     `json:"use_default_allowed_ips"`
+		UseDefaultDNS          bool     `json:"use_default_dns"`
+		UseDefaultEndpoint     bool     `json:"use_default_endpoint"`
+		UseDefaultMTU          bool     `json:"use_default_mtu"`
+		UseDefaultPersistentKA bool     `json:"use_default_persistent_keepalive"`
+		UserId                 string   `json:"user_id"`
+	}{
+		AllowedIPs:          device.AllowedIPs,
+		Description:         device.Description,
+		DNS:                 device.DNS,
+		Endpoint:            device.Endpoint,
+		IPv4:                device.IPv4,
+		IPv6:                device.IPv6,
+		MTU:                 device.MTU,
+		Name:                device.Name,
+		PersistentKeepalive: device.PersistentKeepalive,
+		UserId:              device.UserId,
+	}})
+
 	if err != nil {
 		return nil, err
 	}
 
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/v0/users", c.HostURL), strings.NewReader(string(rb)))
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/v0/devices", c.HostURL), strings.NewReader(string(rb)))
 	if err != nil {
 		return nil, err
 	}
@@ -83,7 +113,7 @@ func (c *Client) UpdateDevice(deviceId string, device Device) (*Device, error) {
 		return nil, err
 	}
 
-	req, err := http.NewRequest("PATCH", fmt.Sprintf("%s/v0/users/%s", c.HostURL, deviceId), strings.NewReader(string(rb)))
+	req, err := http.NewRequest("PATCH", fmt.Sprintf("%s/v0/devices/%s", c.HostURL, deviceId), strings.NewReader(string(rb)))
 	if err != nil {
 		return nil, err
 	}
@@ -104,7 +134,7 @@ func (c *Client) UpdateDevice(deviceId string, device Device) (*Device, error) {
 
 // DeleteDevice - Deletes an Device
 func (c *Client) DeleteDevice(deviceId string) error {
-	req, err := http.NewRequest("DELETE", fmt.Sprintf("%s/v0/users/%s", c.HostURL, deviceId), nil)
+	req, err := http.NewRequest("DELETE", fmt.Sprintf("%s/v0/devices/%s", c.HostURL, deviceId), nil)
 	if err != nil {
 		return err
 	}
