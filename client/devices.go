@@ -53,22 +53,22 @@ func (c *Client) GetDevice(deviceId string) (*Device, error) {
 // CreateDevice - Create new Device
 func (c *Client) CreateDevice(device Device) (*Device, error) {
 	rb, err := json.Marshal(CreateDevice{Device: struct {
-		AllowedIPs             []string `json:"allowed_ips"`
+		AllowedIPs             []string `json:"allowed_ips,omitempty"`
 		Description            string   `json:"description"`
-		DNS                    []string `json:"dns"`
-		Endpoint               string   `json:"endpoint"`
-		IPv4                   string   `json:"ipv4"`
-		IPv6                   string   `json:"ipv6"`
-		MTU                    int      `json:"mtu"`
+		DNS                    []string `json:"dns,omitempty"`
+		Endpoint               string   `json:"endpoint,omitempty"`
+		IPv4                   string   `json:"ipv4,omitempty"`
+		IPv6                   string   `json:"ipv6,omitempty"`
+		MTU                    int      `json:"mtu,omitempty"`
 		Name                   string   `json:"name"`
-		PersistentKeepalive    int      `json:"persistent_keepalive"`
-		PresharedKey           string   `json:"preshared_key"`
+		PersistentKeepalive    int      `json:"persistent_keepalive,omitempty"`
+		PresharedKey           string   `json:"preshared_key,omitempty"`
 		PublicKey              string   `json:"public_key"`
-		UseDefaultAllowedIPs   bool     `json:"use_default_allowed_ips"`
-		UseDefaultDNS          bool     `json:"use_default_dns"`
-		UseDefaultEndpoint     bool     `json:"use_default_endpoint"`
-		UseDefaultMTU          bool     `json:"use_default_mtu"`
-		UseDefaultPersistentKA bool     `json:"use_default_persistent_keepalive"`
+		UseDefaultAllowedIPs   bool     `json:"use_default_allowed_ips,omitempty"`
+		UseDefaultDNS          bool     `json:"use_default_dns,omitempty"`
+		UseDefaultEndpoint     bool     `json:"use_default_endpoint,omitempty"`
+		UseDefaultMTU          bool     `json:"use_default_mtu,omitempty"`
+		UseDefaultPersistentKA bool     `json:"use_default_persistent_keepalive,omitempty"`
 		UserId                 string   `json:"user_id"`
 	}{
 		AllowedIPs:          device.AllowedIPs,
@@ -79,6 +79,7 @@ func (c *Client) CreateDevice(device Device) (*Device, error) {
 		IPv6:                device.IPv6,
 		MTU:                 device.MTU,
 		Name:                device.Name,
+		PublicKey:           device.PublicKey,
 		PersistentKeepalive: device.PersistentKeepalive,
 		UserId:              device.UserId,
 	}})

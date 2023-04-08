@@ -1,11 +1,28 @@
 package main
 
 import (
+	"crypto/rand"
+	"encoding/base64"
 	"fmt"
 	"os"
 
 	fz "github.com/jindrichskupa/firezone-client-go/client"
 )
+
+func publicKey() string {
+	// Generate a random byte slice of length 33
+	bytes := make([]byte, 32)
+	_, err := rand.Read(bytes)
+	if err != nil {
+		fmt.Println("error generating random bytes:", err)
+		return ""
+	}
+
+	// Encode the byte slice using base64
+	encoded := base64.StdEncoding.EncodeToString(bytes)
+
+	return encoded
+}
 
 func main() {
 	client, err := fz.NewClient(os.Getenv("FIREZONE_ENDPOINT"), os.Getenv("FIREZONE_API_KEY"))
@@ -25,6 +42,7 @@ func main() {
 	fmt.Println("Users: ")
 	fmt.Println(fz.PrintUsers(users))
 
+	client.DeleteUser("test5@example.com")
 	user, err := client.CreateUser(fz.User{
 		Email: "test5@example.com",
 		Role:  "admin",
@@ -61,8 +79,6 @@ func main() {
 		fmt.Println(user.PrintUser())
 	}
 
-	client.DeleteUser("test5@example.com")
-
 	// Get all devices
 
 	devices, err := client.GetAllDevices()
@@ -73,6 +89,30 @@ func main() {
 	}
 	fmt.Println("Devices: ")
 	fmt.Println(fz.PrintDevices(devices))
+
+	device, err := client.CreateDevice(fz.Device{
+		Name:        "test5",
+		Description: "test5",
+		UserId:      user.ID,
+		PublicKey:   publicKey(),
+	})
+
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Println(device.PrintDevice())
+	}
+
+	device, err = client.GetDevice(device.ID)
+
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Println(device.PrintDevice())
+	}
+
+	client.DeleteDevice(device.ID)
+	client.DeleteUser("test5@example.com")
 
 	// Get all rules
 
@@ -96,6 +136,7 @@ func main() {
 	} else {
 		fmt.Println(rule.PrintRule())
 	}
+	client.DeleteRule(rule.ID)
 
 	// Get configuration
 
