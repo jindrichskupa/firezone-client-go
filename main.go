@@ -25,6 +25,9 @@ func publicKey() string {
 }
 
 func main() {
+	fmt.Println("Firezone API client example")
+	fmt.Println("FIREZONE_ENDPOINT: ", os.Getenv("FIREZONE_ENDPOINT"))
+
 	client, err := fz.NewClient(os.Getenv("FIREZONE_ENDPOINT"), os.Getenv("FIREZONE_API_KEY"))
 
 	if err != nil {
@@ -32,14 +35,12 @@ func main() {
 	}
 
 	// Get all users
-
+	fmt.Println("Users: ")
 	users, err := client.GetAllUsers()
-
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println("Users: ")
 	fmt.Println(fz.PrintUsers(users))
 
 	client.DeleteUser("test5@example.com")

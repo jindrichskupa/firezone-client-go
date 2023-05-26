@@ -2,15 +2,18 @@ package client
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
+	"log"
 	"net/http"
 	"strings"
 )
 
 // GetAllRules - Returns all user's Rule
 func (c *Client) GetAllRules() (*[]Rule, error) {
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/v0/rules", c.HostURL), nil)
+	url := fmt.Sprintf("%s/v0/rules", c.HostURL)
+	log.Printf("GetAllRules %s", url)
+
+	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -31,7 +34,10 @@ func (c *Client) GetAllRules() (*[]Rule, error) {
 
 // GetRule - Returns a specifc Rule
 func (c *Client) GetRule(ruleId string) (*Rule, error) {
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/v0/rules/%s", c.HostURL, ruleId), nil)
+	url := fmt.Sprintf("%s/v0/rules/%s", c.HostURL, ruleId)
+	log.Printf("GetRule %s", url)
+
+	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -70,7 +76,10 @@ func (c *Client) CreateRule(rule Rule) (*Rule, error) {
 		return nil, err
 	}
 
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/v0/rules", c.HostURL), strings.NewReader(string(rb)))
+	url := fmt.Sprintf("%s/v0/rules", c.HostURL)
+	log.Printf("CreateRule %s", url)
+
+	req, err := http.NewRequest("POST", url, strings.NewReader(string(rb)))
 	if err != nil {
 		return nil, err
 	}
@@ -96,7 +105,10 @@ func (c *Client) UpdateRule(ruleId string, rule Rule) (*Rule, error) {
 		return nil, err
 	}
 
-	req, err := http.NewRequest("PATCH", fmt.Sprintf("%s/v0/rules/%s", c.HostURL, ruleId), strings.NewReader(string(rb)))
+	url := fmt.Sprintf("%s/v0/rules/%s", c.HostURL, ruleId)
+	log.Printf("UpdateRule %s", url)
+
+	req, err := http.NewRequest("PATCH", url, strings.NewReader(string(rb)))
 	if err != nil {
 		return nil, err
 	}
@@ -117,18 +129,17 @@ func (c *Client) UpdateRule(ruleId string, rule Rule) (*Rule, error) {
 
 // DeleteRule - Deletes an Rule
 func (c *Client) DeleteRule(ruleId string) error {
-	req, err := http.NewRequest("DELETE", fmt.Sprintf("%s/v0/rules/%s", c.HostURL, ruleId), nil)
+	url := fmt.Sprintf("%s/v0/rules/%s", c.HostURL, ruleId)
+	log.Printf("DeleteRule %s", url)
+
+	req, err := http.NewRequest("DELETE", url, nil)
 	if err != nil {
 		return err
 	}
 
-	body, err := c.doRequest(req)
+	_, err = c.doRequest(req)
 	if err != nil {
 		return err
-	}
-
-	if string(body) != "Deleted Rule" {
-		return errors.New(string(body))
 	}
 
 	return nil

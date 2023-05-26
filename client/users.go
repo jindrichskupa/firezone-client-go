@@ -2,15 +2,18 @@ package client
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
+	"log"
 	"net/http"
 	"strings"
 )
 
 // GetAllUsers - Returns all user's User
 func (c *Client) GetAllUsers() (*[]User, error) {
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/v0/users", c.HostURL), nil)
+	url := fmt.Sprintf("%s/v0/users", c.HostURL)
+	log.Printf("GetAllUsers %s", url)
+
+	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -31,7 +34,10 @@ func (c *Client) GetAllUsers() (*[]User, error) {
 
 // GetUser - Returns a specifc User
 func (c *Client) GetUser(userId string) (*User, error) {
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/v0/users/%s", c.HostURL, userId), nil)
+	url := fmt.Sprintf("%s/v0/users/%s", c.HostURL, userId)
+	log.Printf("GetUser %s", url)
+
+	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -64,7 +70,10 @@ func (c *Client) CreateUser(user User) (*User, error) {
 		return nil, err
 	}
 
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/v0/users", c.HostURL), strings.NewReader(string(rb)))
+	url := fmt.Sprintf("%s/v0/users", c.HostURL)
+	log.Printf("CreateUser %s", url)
+
+	req, err := http.NewRequest("POST", url, strings.NewReader(string(rb)))
 	if err != nil {
 		return nil, err
 	}
@@ -95,7 +104,10 @@ func (c *Client) UpdateUser(userId string, user User) (*User, error) {
 		return nil, err
 	}
 
-	req, err := http.NewRequest("PATCH", fmt.Sprintf("%s/v0/users/%s", c.HostURL, userId), strings.NewReader(string(rb)))
+	url := fmt.Sprintf("%s/v0/users/%s", c.HostURL, userId)
+	log.Printf("UpdateUser %s", url)
+
+	req, err := http.NewRequest("PATCH", url, strings.NewReader(string(rb)))
 	if err != nil {
 		return nil, err
 	}
@@ -116,18 +128,17 @@ func (c *Client) UpdateUser(userId string, user User) (*User, error) {
 
 // DeleteUser - Deletes an User
 func (c *Client) DeleteUser(userId string) error {
+	url := fmt.Sprintf("%s/v0/users/%s", c.HostURL, userId)
+	log.Printf("DeleteUser %s", url)
+
 	req, err := http.NewRequest("DELETE", fmt.Sprintf("%s/v0/users/%s", c.HostURL, userId), nil)
 	if err != nil {
 		return err
 	}
 
-	body, err := c.doRequest(req)
+	_, err = c.doRequest(req)
 	if err != nil {
 		return err
-	}
-
-	if string(body) != "Deleted User" {
-		return errors.New(string(body))
 	}
 
 	return nil

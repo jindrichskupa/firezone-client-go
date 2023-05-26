@@ -37,7 +37,7 @@ func NewClient(host, apiKey string) (*Client, error) {
 func (c *Client) doRequest(req *http.Request) ([]byte, error) {
 	token := c.ApiKey
 
-	req.Header.Set("Authorization", token)
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", token))
 	req.Header.Set("Content-Type", "application/json")
 
 	res, err := c.HTTPClient.Do(req)
@@ -51,7 +51,7 @@ func (c *Client) doRequest(req *http.Request) ([]byte, error) {
 		return nil, err
 	}
 
-	if res.StatusCode != http.StatusOK && res.StatusCode != http.StatusCreated {
+	if res.StatusCode != http.StatusOK && res.StatusCode != http.StatusCreated && res.StatusCode != http.StatusNoContent {
 		return nil, fmt.Errorf("status: %d, body: %s", res.StatusCode, body)
 	}
 

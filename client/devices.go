@@ -4,13 +4,17 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"log"
 	"net/http"
 	"strings"
 )
 
 // GetAllDevices - Returns all user's Device
 func (c *Client) GetAllDevices() (*[]Device, error) {
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/v0/devices", c.HostURL), nil)
+	url := fmt.Sprintf("%s/v0/devices", c.HostURL)
+	log.Printf("GetAllDevices %s", url)
+
+	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -31,7 +35,10 @@ func (c *Client) GetAllDevices() (*[]Device, error) {
 
 // GetDevice - Returns a specifc Device
 func (c *Client) GetDevice(deviceId string) (*Device, error) {
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/v0/devices/%s", c.HostURL, deviceId), nil)
+	url := fmt.Sprintf("%s/v0/devices/%s", c.HostURL, deviceId)
+	log.Printf("GetDevice %s", url)
+
+	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -88,7 +95,10 @@ func (c *Client) CreateDevice(device Device) (*Device, error) {
 		return nil, err
 	}
 
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/v0/devices", c.HostURL), strings.NewReader(string(rb)))
+	url := fmt.Sprintf("%s/v0/devices", c.HostURL)
+	log.Printf("CreateDevice %s", url)
+
+	req, err := http.NewRequest("POST", url, strings.NewReader(string(rb)))
 	if err != nil {
 		return nil, err
 	}
@@ -114,7 +124,10 @@ func (c *Client) UpdateDevice(deviceId string, device Device) (*Device, error) {
 		return nil, err
 	}
 
-	req, err := http.NewRequest("PATCH", fmt.Sprintf("%s/v0/devices/%s", c.HostURL, deviceId), strings.NewReader(string(rb)))
+	url := fmt.Sprintf("%s/v0/devices/%s", c.HostURL, deviceId)
+	log.Printf("UpdateDevice %s", url)
+
+	req, err := http.NewRequest("PATCH", url, strings.NewReader(string(rb)))
 	if err != nil {
 		return nil, err
 	}
@@ -135,7 +148,10 @@ func (c *Client) UpdateDevice(deviceId string, device Device) (*Device, error) {
 
 // DeleteDevice - Deletes an Device
 func (c *Client) DeleteDevice(deviceId string) error {
-	req, err := http.NewRequest("DELETE", fmt.Sprintf("%s/v0/devices/%s", c.HostURL, deviceId), nil)
+	url := fmt.Sprintf("%s/v0/devices/%s", c.HostURL, deviceId)
+	log.Printf("DeleteDevice %s", url)
+
+	req, err := http.NewRequest("DELETE", url, nil)
 	if err != nil {
 		return err
 	}
