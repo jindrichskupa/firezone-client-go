@@ -1,4 +1,7 @@
-## Firezone Client (Go)
+# Firezone Client (Go)
 
 A Go library for [Firezone](https://www.firezone.dev/docs/reference/rest-api)
-# firezone-client-go
+
+## firezone-client-go
+
+Implements Firezone REST API

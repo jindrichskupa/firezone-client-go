@@ -156,13 +156,9 @@ func (c *Client) DeleteDevice(deviceId string) error {
 		return err
 	}
 
-	body, err := c.doRequest(req)
+	_, err = c.doRequest(req)
 	if err != nil {
 		return err
-	}
-
-	if string(body) != "Deleted Device" {
-		return errors.New(string(body))
 	}
 
 	return nil
